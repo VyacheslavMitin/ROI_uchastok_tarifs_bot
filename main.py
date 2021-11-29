@@ -1,4 +1,5 @@
-# Бот для смены тарифов агроторга. Заранее открыть договор, отфилтровать по услугам
+# Бот для смены тарифов Аграторга и прочих "больших" клиентов.
+# Заранее открыть договор с карточками обслуживания, отфильтровать по тарифам которые нужно поменять и запустить
 
 import pyautogui as pg
 import time
@@ -6,7 +7,7 @@ import os
 import sys
 
 # Проверка подразделения
-if os.getlogin() == 'Администратор':
+if os.getlogin() == 'sonic':
     CITY = 'ulyanovsk'
     x, y = 436, 273
 elif os.getlogin() == 'user':
@@ -15,7 +16,7 @@ elif os.getlogin() == 'user':
 else:  # выход с ошибкой если не то имя логина в систему
     sys.exit("Ошибка: не подходящий логин в систему!")
 
-pg.FAILSAFE = True  # выход из скрипта
+pg.FAILSAFE = True  # выход из скрипта, не понятно как работает
 # Агроторг
 inkas_agrotog_min = '276'
 inkas_agrotorg_percentage = '0,05'
@@ -42,7 +43,7 @@ def bot_tarif(services: str = 'inkas') -> None:
     """Функция бота"""
     pg.click(x, y)  # кликнуть в первую строку списка
     time.sleep(0.5)
-    pg.press('pdup', presses=10)  # подняться в спсике максмально высоко на верхнюю строку
+    pg.press('pageup', presses=10)  # подняться в списке максимально высоко на верхнюю строку
     pg.keyDown('shift')  # прощелкивание до кнопки с тарифами
     pg.press('tab', presses=3, interval=0.5)
     pg.keyUp('shift')
