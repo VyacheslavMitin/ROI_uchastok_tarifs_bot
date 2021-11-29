@@ -63,7 +63,7 @@ def bot_tarif(services: str = 'inkas') -> None:
         if CITY == 'ulyanovsk':
             down_list = 30
         else:
-            down_list = 14
+            down_list = 15
     pg.press('down', presses=down_list)
     pg.press('tab', presses=2, interval=1)  # прощелкивание до коэффициентов
     if services == 'inkas':
@@ -74,10 +74,8 @@ def bot_tarif(services: str = 'inkas') -> None:
         pg.write(third_coef, interval=0.25)
     pg.press('tab')  # прокликивание окна с текстовым описанием тарифа
     pg.press('tab', presses=2, interval=0.5)  # поправить на 2
-    # time.sleep(1.5)
     pg.press('enter')  # сохранить изменения
     pg.press('tab', presses=4, interval=0.5)  # поправить на 4
-    # time.sleep(1.5)
     pg.press('enter')  # сохранить изменения
     time.sleep(1.5)
 
