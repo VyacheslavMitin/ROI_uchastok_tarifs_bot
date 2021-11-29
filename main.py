@@ -52,14 +52,16 @@ def bot_tarif(services:str='inkas') -> None:
     elif services == 'razmen':
         pg.write(third_coef, interval=0.25)
     pg.press('tab')  # прокликивание окна с текстовым описанием тарифа
-    pg.press('tab', presses=1, interval=0.5)  # поправить на 2
+    pg.press('tab', presses=2, interval=0.5)  # поправить на 2
+    # time.sleep(1.5)
     pg.press('enter')  # сохранить изменения
-    pg.press('tab', presses=5, interval=0.5)  # поправить на 4
+    pg.press('tab', presses=4, interval=0.5)  # поправить на 4
+    # time.sleep(1.5)
     pg.press('enter')  # сохранить изменения
     time.sleep(1.5)
 
 
 i = 0
-for i in range(1):
+for i in range(20):
     bot_tarif(services='inkas')
     i += 1
