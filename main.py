@@ -1,11 +1,7 @@
 # Бот для смены тарифов агроторга. Заранее открыть договор, отфилтровать по услугам
 
 import pyautogui as pg
-import os
-import sys
 import time
-from datetime import datetime
-import subprocess
 
 pg.FAILSAFE = True  # выход из скрипта
 # Агроторг
@@ -28,10 +24,10 @@ pg.keyUp('alt')
 time.sleep(1)  # время на ожидание
 
 
-def bot_tarif() -> None:
+def bot_tarif(services:str='inkas') -> None:
     """Функция бота"""
     pg.click(x=436, y=273)  # кликнуть в первую строку списка
-    time.sleep(1.5)
+    time.sleep(0.5)
     pg.press('pdup', presses=10)  # подняться в спсике максмально высоко на верхнюю строку
     pg.keyDown('shift')  # прощелкивание до кнопки с тарифами
     pg.press('tab', presses=3, interval=0.5)
@@ -43,11 +39,18 @@ def bot_tarif() -> None:
     pg.press('tab', presses=3, interval=0.5)
     pg.press('down', presses=2, interval=0.5)
     pg.hotkey('ctrl', 'tab')  # переход в окно с коэффециентами
-    pg.press('down', presses=5, interval=0.5)
+    if services == 'inkas':
+        down_list = 5
+    elif services == 'razmen':
+        down_list = 30
+    pg.press('down', presses=down_list)
     pg.press('tab', presses=2, interval=1)  # прощелкивание до коэффициентов
-    pg.write(first_coef, interval=0.25)
-    pg.press('down')
-    pg.write(second_coef, interval=0.25)
+    if services == 'inkas':
+        pg.write(first_coef, interval=0.25)
+        pg.press('down')
+        pg.write(second_coef, interval=0.25)
+    elif services == 'razmen':
+        pg.write(third_coef, interval=0.25)
     pg.press('tab')  # прокликивание окна с текстовым описанием тарифа
     pg.press('tab', presses=1, interval=0.5)  # поправить на 2
     pg.press('enter')  # сохранить изменения
@@ -57,6 +60,6 @@ def bot_tarif() -> None:
 
 
 i = 0
-for i in range(10):
-    bot_tarif()
+for i in range(1):
+    bot_tarif(services='inkas')
     i += 1
