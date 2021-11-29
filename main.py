@@ -18,6 +18,7 @@ second_coef = inkas_agrotorg_percentage
 third_coef = razmen_agrotog
 
 # Начало работы скрипта
+cycle = pg.prompt(text='Введите количество шагов', title='Количество шагов' , default='20')
 pg.keyDown('alt')  # переключение на окно участка
 pg.press('tab')
 pg.keyUp('alt')
@@ -62,6 +63,8 @@ def bot_tarif(services:str='inkas') -> None:
 
 
 i = 0
-for i in range(20):
+for i in range(cycle):
     bot_tarif(services='inkas')
+    print(f'Шаг {i}')
     i += 1
+pg.alert(text='Все', title='Исполнено', button='OK')
