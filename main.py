@@ -2,6 +2,18 @@
 
 import pyautogui as pg
 import time
+import os
+import sys
+
+# Проверка подразделения
+if os.getlogin() == 'Администратор':
+    CITY = 'ulyanovsk'
+    x, y = 436, 273
+elif os.getlogin() == 'user':
+    CITY = 'dimitrovgrad'
+    x, y = 493, 462
+else:  # выход с ошибкой если не то имя логина в систему
+    sys.exit("Ошибка: не подходящий логин в систему!")
 
 pg.FAILSAFE = True  # выход из скрипта
 # Агроторг
@@ -18,16 +30,17 @@ second_coef = inkas_agrotorg_percentage
 third_coef = razmen_agrotog
 
 # Начало работы скрипта
-cycle = int(pg.prompt(text='Введите количество шагов', title='Количество шагов' , default='20'))
+time.sleep(1)  # время на ожидание
+cycle = int(pg.prompt(text='Введите количество шагов', title='Количество шагов', default='20'))
 pg.keyDown('alt')  # переключение на окно участка
 pg.press('tab')
 pg.keyUp('alt')
 time.sleep(1)  # время на ожидание
 
 
-def bot_tarif(services:str='inkas') -> None:
+def bot_tarif(services: str = 'inkas') -> None:
     """Функция бота"""
-    pg.click(x=436, y=273)  # кликнуть в первую строку списка
+    pg.click(x, y)  # кликнуть в первую строку списка
     time.sleep(0.5)
     pg.press('pdup', presses=10)  # подняться в спсике максмально высоко на верхнюю строку
     pg.keyDown('shift')  # прощелкивание до кнопки с тарифами
@@ -40,10 +53,17 @@ def bot_tarif(services:str='inkas') -> None:
     pg.press('tab', presses=3, interval=0.5)
     pg.press('down', presses=2, interval=0.5)
     pg.hotkey('ctrl', 'tab')  # переход в окно с коэффециентами
+    down_list = ''
     if services == 'inkas':
-        down_list = 5
+        if CITY == 'ulyanovsk':
+            down_list = 5
+        else:
+            down_list = 2
     elif services == 'razmen':
-        down_list = 30
+        if CITY == 'ulyanovsk':
+            down_list = 30
+        else:
+            down_list = 14
     pg.press('down', presses=down_list)
     pg.press('tab', presses=2, interval=1)  # прощелкивание до коэффициентов
     if services == 'inkas':
